@@ -1092,11 +1092,13 @@ const Dashboard = ({ user }) => {
     grid.on('change', handleChange);
     gridRef.current = grid;
 
+    // Store ref value in local variable for cleanup
+    const widgetsRef = registeredWidgetsRef.current;
     return () => {
       grid.off('change', handleChange);
       grid.destroy(false);
       gridRef.current = null;
-      registeredWidgetsRef.current.clear();
+      widgetsRef.clear();
     };
   }, [mode]);
 
@@ -1654,7 +1656,7 @@ useEffect(() => {
         });
     }
   });
-}, [widgets]);
+}, [widgets, externalData]);
   const renderCustomDashboard = () => (
     <>
       <header className="dashboard__header" style={{
