@@ -22,6 +22,9 @@ const LoginForm = () => {
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
       <div className="card z-depth-5" style={{ maxWidth: 440, width: '90%', borderRadius: 20, padding: '48px 40px', boxShadow: '0 20px 60px rgba(0,0,0,0.3)' }}>
         <form onSubmit={handleSubmit} autoComplete="on">
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 24 }}>
+            <img src="/image001.png" alt="Logo" style={{ width: 80, height: 80, objectFit: 'contain', marginBottom: 12 }} />
+          </div>
           <h4 className="center-align" style={{ marginBottom: 40, marginTop: 0, fontWeight: 700, fontSize: 32, color: '#333' }}>Sign In</h4>
           
           <div style={{ marginBottom: 24 }}>

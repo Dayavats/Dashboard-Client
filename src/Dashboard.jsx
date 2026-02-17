@@ -675,13 +675,13 @@ const classicChartData = {
 };
 
 const classicCards = [
-  { id: 'classic-1', type: 'lineChart', title: 'Sales Trend' },
-  { id: 'classic-2', type: 'barChart', title: 'Revenue by Region' },
-  { id: 'classic-3', type: 'pieChart', title: 'Market Share' },
+  { id: 'classic-1', type: 'lineChart', title: 'Dew Point Trend' },
+  { id: 'classic-2', type: 'barChart', title: 'Dew Point by Area' },
+  { id: 'classic-3', type: 'pieChart', title: 'Dew Point Healthiness' },
   {
     id: 'classic-4',
     type: 'statValue',
-    title: 'Quarterly Target',
+    title: 'Overall Health',
     content: { label: 'Target', value: '127%' }
   },
   {
@@ -2253,7 +2253,7 @@ useEffect(() => {
             marginBottom: 12,
             textShadow: '0 2px 10px rgba(0,0,0,0.2)'
           }}>
-            Welcome to Dashboard Builder
+            Welcome to Excide Admin Section
           </h1>
           <p style={{ 
             color: 'rgba(255,255,255,0.9)', 
@@ -2322,7 +2322,7 @@ useEffect(() => {
               lineHeight: 1.6,
               marginBottom: 0
             }}>
-              Build your layout with draggable widgets, charts, and static notes.
+              Build your layout with draggable widgets, charts, and analysis.
             </p>
           </div>
           
