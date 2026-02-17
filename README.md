@@ -1,70 +1,75 @@
-# Getting Started with Create React App
+# Advanced React Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A highly customizable, feature-rich dashboard application built with React. This dashboard supports advanced analytics, real-time collaboration, extensibility, and modern UI/UX best practices.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+### Core Dashboard
+- **Custom & Classic Modes**: Choose between a fully customizable dashboard or a classic, curated layout.
+- **Drag-and-Drop Widgets**: Add, move, resize, duplicate, hide/show, and lock/unlock widgets using GridStack.js.
+- **Widget Editing**: Edit widget properties, colors, chart types, and data directly from the UI.
+- **Undo/Redo**: Instantly revert or reapply changes to your dashboard layout and widgets.
+- **Save/Load Layouts**: Save multiple dashboard layouts and switch between them at any time.
+- **Export**: Export your dashboard as an image (PNG) or PDF.
+- **Responsive & Accessible**: Fully responsive design with ARIA roles and keyboard navigation.
+- **Theming**: Switch between light, dark, and custom themes.
 
-### `npm start`
+### Data & Visualization
+- **Chart Widgets**: Line, bar, pie, area, scatter, and gauge charts with advanced options.
+- **Static Widgets**: Display static values, text, and numbers with custom labels and colors.
+- **CSV Upload**: Import data into widgets via CSV files.
+- **Data Integrations**: Fetch data from public REST APIs or Google Sheets (CSV URL).
+- **Cross-Widget Filtering**: Apply global filters to all chart widgets.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Extensibility & Marketplace
+- **Widget Marketplace**: Browse and add pre-built widgets from a marketplace modal.
+- **Custom Scripting**: Add custom JavaScript to transform widget data on the fly.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Collaboration & Sharing
+- **Real-Time Collaboration**: Sync dashboard changes live with other users via WebSocket.
+- **User Authentication**: Simple login/logout and user context.
+- **Role-Based Sharing**: Share dashboards with view/edit permissions via a shareable link.
 
-### `npm test`
+### Advanced Features
+- **Notifications**: Schedule time-based or data-triggered notifications (browser notifications).
+- **Version History**: Save, view, restore, and delete previous dashboard versions (snapshots).
+- **Drill-Down (Sub-Dashboards)**: Attach sub-dashboards to any widget and drill down for deeper analysis.
+- **AI Insights**: Analyze dashboard data for anomalies and suggestions using built-in AI heuristics.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Other Highlights
+- **Accessibility**: All modals and controls are keyboard and screen-reader accessible.
+- **Mobile Friendly**: Responsive layout adapts to mobile and tablet screens.
+- **Local Persistence**: All user data, layouts, versions, and settings are stored in browser localStorage.
 
-### `npm run build`
+## Getting Started
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **Install dependencies**
+   ```bash
+   cd client
+   npm install
+   ```
+2. **Start the development server**
+   ```bash
+   npm start
+   ```
+3. **(Optional) Start the WebSocket server for collaboration**
+   - See `server/` for a simple Node.js WebSocket server example.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## File Structure
+- `src/Dashboard.jsx` — Main dashboard component with all features
+- `src/components/Chart.jsx` — Chart rendering logic
+- `src/components/AuthContext.js` — Authentication context
+- `public/` — Static assets and HTML
+- `server/` — Example backend for real-time collaboration
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Customization
+- Add new widget types in `widgetCatalog` in `Dashboard.jsx`
+- Extend chart options and types in `Chart.jsx`
+- Modify theming in `Dashboard.css`
 
-### `npm run eject`
+## License
+MIT
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Enjoy your all-in-one analytics dashboard!**
