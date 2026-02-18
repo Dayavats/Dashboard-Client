@@ -94,17 +94,27 @@ const Chart = ({ type, data }) => {
         </div>
       );
 
-    case 'scatterChart':
+    case 'scatterChart': {
+      const scatterPoints = dataset
+        .map(point => ({ id: point.id, x: point.x, y: point.y }))
+        .filter(point => Number.isFinite(point.x) && Number.isFinite(point.y));
+
+      if (!scatterPoints.length) {
+        return <div className="chart-placeholder">Waiting for live data...</div>;
+      }
+
       return (
         <div className="chart-wrapper">
           <ScatterChart
-            {...baseProps}
-            xAxis={[{ dataKey: 'x', scaleType: 'linear' }]}
-            yAxis={[{ dataKey: 'y', min: yMin, max: yMax }]}
-            series={[{ dataKey: 'y', label: data?.title }]}
+            width={520}
+            height={280}
+            xAxis={[{ min: 0 }]}
+            yAxis={[{ min: yMin, max: yMax }]}
+            series={[{ label: data?.title, data: scatterPoints }]}
           />
         </div>
       );
+    }
 
     default:
       return <div className="chart-placeholder">Unsupported widget</div>;
