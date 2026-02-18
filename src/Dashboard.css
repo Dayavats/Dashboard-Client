@@ -55,6 +55,7 @@
   box-shadow: var(--dashboard-shadow);
   border: 1px solid var(--dashboard-border);
 }
+
 :root {
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
@@ -382,6 +383,16 @@ select:focus {
   box-shadow: var(--dashboard-shadow);
   border: 1px solid var(--dashboard-border);
   padding: 20px 24px 28px;
+}
+
+.classic-card--comparison {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 900px) {
+  .classic-card--comparison {
+    grid-column: span 1;
+  }
 }
 
 .classic-card .widget-card__body {

@@ -7,6 +7,7 @@ import AIInsightsModal from './components/AIInsightsModal';
 import AuthContext from './components/AuthContext';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import ComparisonChart from './components/ComparisonChart';
 
 // Dashboard Sharing Modal
 const SharingModal = ({ open, onClose, shareUrl, permission, setPermission }) => {
@@ -645,34 +646,62 @@ const starterWidgets = [];
 
 const classicChartData = {
   lineChart: {
-    title: 'Sales Trend',
-    data: [
-      { x: 1, y: 40 },
-      { x: 2, y: 55 },
-      { x: 3, y: 62 },
-      { x: 4, y: 48 },
-      { x: 5, y: 70 },
-      { x: 6, y: 66 }
-    ]
-  },
-  barChart: {
-    title: 'Revenue by Region',
-    data: [
-      { label: 'North', value: 320 },
-      { label: 'South', value: 95 },
-      { label: 'East', value: 410 },
-      { label: 'West', value: 270 }
-    ]
-  },
+  title: 'Dew Point Trend (degC)',
+  data: [
+    { x: 1, y: -38 },
+    { x: 2, y: -34 },
+    { x: 3, y: -29 },
+    { x: 4, y: -31 },
+    { x: 5, y: -27 },
+    { x: 6, y: -30 }
+  ],
+  yMin: -60,
+  yMax: 60
+},
+
+barChart: {
+  title: 'Dew Point by Area (degC)',
+  data: [
+    { label: 'Dry Room 1', value: -32 },
+    { label: 'Dry Room 2', value: -28 },
+    { label: 'Mixing Area', value: -25 },
+    { label: 'Packaging', value: -30 }
+  ],
+  yMin: -60,
+  yMax: 60
+},
+
   pieChart: {
-    title: 'Market Share',
-    data: [
-      { label: 'Product A', value: 52 },
-      { label: 'Product B', value: 33 },
-      { label: 'Product C', value: 15 }
-    ]
+  title: 'Environmental Health Status (%)',
+  data: [
+    { label: 'Safe', value: 75 },
+    { label: 'Warning', value: 18 },
+    { label: 'Critical', value: 7 }
+  ]
+},
+
+
+ comparisonChart: {
+  area1: {
+    name: "Dry Room 1",
+    dewPoint: -30,
+    relativeHumidity: 35,
+    airborneParticles: 3200,
+    temperature: 24
+  },
+  area2: {
+    name: "Dry Room 2",
+    dewPoint: -26,
+    relativeHumidity: 42,
+    airborneParticles: 4500,
+    temperature: 27
   }
+}
+
+
 };
+
+
 
 const classicCards = [
   { id: 'classic-1', type: 'lineChart', title: 'Dew Point Trend' },
@@ -685,70 +714,86 @@ const classicCards = [
     content: { label: 'Target', value: '127%' }
   },
   {
-    id: 'classic-5',
-    type: 'statText',
-    title: 'Announcements',
-    content: { heading: 'Reminder', body: 'Weekly sync moved to 11 AM.' }
+    id: 'comparisonChart',
+    type: 'comparisonChart',
+    title: '',
+    description: 'Compare dew point, relative humidity, airborne particles, and temperature between two areas.',
+    layout: { w: 6, h: 6 }
+ 
   }
 ];
 
-const StaticValueWidget = ({ content, onChange }) => (
-  <div className="static-widget">
-    <input
-      className="static-widget__label"
-      value={content.label}
-      onChange={event => onChange({ label: event.target.value })}
-      placeholder="Label"
-    />
-    <input
-      className="static-widget__value"
-      value={content.value}
-      onChange={event => onChange({ value: event.target.value })}
-      placeholder="Value"
-    />
-  </div>
-);
+const StaticValueWidget = ({ content = {}, onChange }) => {
+  const { label = '', value = '' } = content;
 
-const StaticTextWidget = ({ content, onChange }) => (
-  <div className="static-widget static-widget--text">
-    <input
-      className="static-widget__label"
-      value={content.heading}
-      onChange={event => onChange({ heading: event.target.value })}
-      placeholder="Heading"
-    />
-    <textarea
-      value={content.body}
-      onChange={event => onChange({ body: event.target.value })}
-      placeholder="Add notes"
-    />
-  </div>
-);
-
-const StaticNumberWidget = ({ content, onChange }) => (
-  <div className="static-widget static-widget--number">
-    <input
-      className="static-widget__label"
-      value={content.label}
-      onChange={event => onChange({ label: event.target.value })}
-      placeholder="Metric"
-    />
-    <div className="static-widget__number-row">
+  return (
+    <div className="static-widget">
+      <input
+        className="static-widget__label"
+        value={label}
+        onChange={event => onChange({ label: event.target.value })}
+        placeholder="Label"
+      />
       <input
         className="static-widget__value"
-        type="number"
-        value={content.value}
-        onChange={event => onChange({ value: Number(event.target.value) })}
-      />
-      <input
-        className="static-widget__suffix"
-        value={content.suffix}
-        onChange={event => onChange({ suffix: event.target.value })}
-        placeholder="Suffix"
+        value={value}
+        onChange={event => onChange({ value: event.target.value })}
+        placeholder="Value"
       />
     </div>
-  </div>
-);
+  );
+};
+
+
+const StaticTextWidget = ({ content = {}, onChange }) => {
+  const { heading = '', body = '' } = content;
+
+  return (
+    <div className="static-widget static-widget--text">
+      <input
+        className="static-widget__label"
+        value={heading}
+        onChange={event => onChange({ heading: event.target.value })}
+        placeholder="Heading"
+      />
+      <textarea
+        value={body}
+        onChange={event => onChange({ body: event.target.value })}
+        placeholder="Add notes"
+      />
+    </div>
+  );
+};
+
+
+const StaticNumberWidget = ({ content = {}, onChange }) => {
+  const { label = '', value = 0, suffix = '' } = content;
+
+  return (
+    <div className="static-widget static-widget--number">
+      <input
+        className="static-widget__label"
+        value={label}
+        onChange={event => onChange({ label: event.target.value })}
+        placeholder="Metric"
+      />
+      <div className="static-widget__number-row">
+        <input
+          className="static-widget__value"
+          type="number"
+          value={value}
+          onChange={event => onChange({ value: Number(event.target.value) })}
+        />
+        <input
+          className="static-widget__suffix"
+          value={suffix}
+          onChange={event => onChange({ suffix: event.target.value })}
+          placeholder="Suffix"
+        />
+      </div>
+    </div>
+  );
+};
 
 
 
@@ -1248,7 +1293,7 @@ const Dashboard = ({ user }) => {
   const classicCardsWithContent = useMemo(
     () =>
       classicCards.map(card => {
-        if (chartTypes.has(card.type)) {
+       if (chartTypes.has(card.type) || card.type === "comparisonChart") {
           return {
             ...card,
             chart: classicChartData[card.type]
@@ -1295,6 +1340,8 @@ const Dashboard = ({ user }) => {
         return <StaticTextWidget content={content} onChange={updates => updateStaticWidget(widget.id, updates)} />;
       case 'statNumber':
         return <StaticNumberWidget content={content} onChange={updates => updateStaticWidget(widget.id, updates)} />;
+      case 'comparisonChart':
+        return <ComparisonChart content={content} />;
       default:
         return <div className="chart-placeholder">Unsupported widget</div>;
     }
@@ -2209,23 +2256,26 @@ useEffect(() => {
 
   const renderClassicDashboard = () => (
     <div className="classic-grid">
+  
       {classicCardsWithContent.map(card => (
-        <div key={card.id} className="classic-card">
+        <div key={card.id} className={`classic-card ${card.type === "comparisonChart" ? "classic-card--comparison" : ""}`.trim()}>
           <div className="widget-card__header">
             <h3>{card.title}</h3>
           </div>
           <div className="widget-card__body">
-            {chartTypes.has(card.type) ? (
-              <Chart type={card.type} data={card.chart} />
-            ) : card.type === 'statValue' ? (
+            {card.type === "comparisonChart" ? (
+  <ComparisonChart content={card.chart} />
+) : chartTypes.has(card.type) ? (
+  <Chart type={card.type} data={card.chart} />
+) : card.type === 'statValue' ? (
               <div className="classic-stat">
-                <span>{card.content.label}</span>
-                <strong>{card.content.value}</strong>
+                <span>{card.content?.label || ''}</span>
+                <strong>{card.content?.value || ''}</strong>
               </div>
             ) : (
               <div className="classic-text">
-                <h4>{card.content.heading}</h4>
-                <p>{card.content.body}</p>
+                <h4>{card.content?.heading || ''}</h4>
+                <p>{card.content?.body || ''}</p>
               </div>
             )}
           </div>
@@ -2246,6 +2296,7 @@ useEffect(() => {
         padding: '40px 20px'
       }}>
         <div style={{ textAlign: 'center', marginBottom: 50 }}>
+          <img src="/image001.png" alt="Logo" style={{ width: 88, height: 88, objectFit: 'contain', marginBottom: 18 }} />
           <h1 style={{ 
             color: '#ffffff', 
             fontSize: 48, 
@@ -2423,6 +2474,7 @@ useEffect(() => {
             >
               <i className="material-icons" style={{ margin: 0 }}>arrow_back</i>
             </button>
+            <img src="/image001.png" alt="Logo" style={{ width: 120, height: 40, objectFit: 'contain' }} />
             <h5 style={{ margin: 0, fontWeight: 600, color: 'var(--dashboard-text)' }}>
               {mode === 'custom' ? 'Custom Dashboard' : 'Classic Dashboard'}
             </h5>

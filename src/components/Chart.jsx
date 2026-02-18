@@ -22,6 +22,11 @@ const sanitizePoints = (points = []) =>
     }))
     .filter(point => Number.isFinite(point.value) || Number.isFinite(point.y));
 
+const parseAxisValue = value => {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : undefined;
+};
+
 const Chart = ({ type, data }) => {
   if (type === 'gaugeChart') {
     const gaugeValue = Number(data?.value ?? 0);
@@ -41,6 +46,11 @@ const Chart = ({ type, data }) => {
     return <div className="chart-placeholder">Waiting for live data...</div>;
   }
 
+  const yMin = parseAxisValue(data?.yMin);
+  const yMax = parseAxisValue(data?.yMax);
+  const hasAxisRange = yMin !== undefined || yMax !== undefined;
+  const yAxis = hasAxisRange ? [{ min: yMin, max: yMax }] : undefined;
+
   const baseProps = { width: 520, height: 280, dataset };
 
   switch (type) {
@@ -51,6 +61,7 @@ const Chart = ({ type, data }) => {
           <LineChart
             {...baseProps}
             xAxis={[{ dataKey: 'x', scaleType: 'linear' }]}
+            yAxis={yAxis}
             series={[{ dataKey: 'y', area: type === 'areaChart', label: data?.title }]}
           />
         </div>
@@ -62,6 +73,7 @@ const Chart = ({ type, data }) => {
           <BarChart
             {...baseProps}
             xAxis={[{ dataKey: 'label', scaleType: 'band' }]}
+            yAxis={yAxis}
             series={[{ dataKey: 'value', label: data?.title }]}
           />
         </div>
@@ -88,7 +100,7 @@ const Chart = ({ type, data }) => {
           <ScatterChart
             {...baseProps}
             xAxis={[{ dataKey: 'x', scaleType: 'linear' }]}
-            yAxis={[{ dataKey: 'y' }]}
+            yAxis={[{ dataKey: 'y', min: yMin, max: yMax }]}
             series={[{ dataKey: 'y', label: data?.title }]}
           />
         </div>
