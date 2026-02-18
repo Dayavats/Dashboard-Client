@@ -2304,7 +2304,7 @@ useEffect(() => {
             marginBottom: 12,
             textShadow: '0 2px 10px rgba(0,0,0,0.2)'
           }}>
-            Welcome to Excide Admin Section
+            Welcome to Exide Admin Section
           </h1>
           <p style={{ 
             color: 'rgba(255,255,255,0.9)', 
